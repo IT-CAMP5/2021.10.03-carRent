@@ -1,8 +1,15 @@
 package pl.camp.it.car.rent.model;
 
-public class Car extends Vehicle {
-    public Car(String brand, String model, int year, String plate) {
+public class Truck extends Vehicle {
+    private int wheels;
+
+    public Truck(String brand, String model, int year, String plate, int wheels) {
         super(brand, model, year, plate);
+        this.wheels = wheels;
+    }
+
+    public int getWheels() {
+        return wheels;
     }
 
     @Override
@@ -15,7 +22,9 @@ public class Car extends Vehicle {
                 .append(" Rok produkcji: ")
                 .append(this.getYear())
                 .append(" Rejestracja: ")
-                .append(this.getPlate());
+                .append(this.getPlate())
+                .append(" Ilość kół: ")
+                .append(this.wheels);
 
         if(this.isRent()) {
             sb.append(" Niedostępny");
