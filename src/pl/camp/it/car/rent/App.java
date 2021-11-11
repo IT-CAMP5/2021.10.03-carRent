@@ -1,5 +1,6 @@
 package pl.camp.it.car.rent;
 
+import pl.camp.it.car.rent.authenticate.Authenticator;
 import pl.camp.it.car.rent.database.DataBase;
 import pl.camp.it.car.rent.gui.GUI;
 import pl.camp.it.car.rent.model.Vehicle;
@@ -10,11 +11,33 @@ import java.io.InputStreamReader;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        DataBase dataBase = new DataBase();
-        while(true) {
-            GUI.showMenu();
+        DataBase dataBase = DataBase.getInstance();
+        GUI gui = GUI.getInstance();
+        Authenticator authenticator = Authenticator.getInstance();
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        for(int i = 0; i < 3; i++) {
+            //logowanie
+            System.out.println("Login:");
+            String login = reader.readLine();
+            System.out.println("Password:");
+            String password = reader.readLine();
+
+            if (!authenticator.authenticate(login, password)) {
+                System.out.println("Nieprawidłowe dane !!");
+            } else {
+                break;
+            }
+
+            if(i == 2) {
+                return;
+            }
+        }
+
+        while(true) {
+            gui.showMenu();
+
             String choose = reader.readLine();
             switch (choose) {
                 case "1":
